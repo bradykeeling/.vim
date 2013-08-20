@@ -1,5 +1,8 @@
 set nocompatible
 
+set rtp+=/usr/local/go/misc/vim/
+filetype plugin indent on
+syntax on
 " Pathogen
 call pathogen#infect()
 call pathogen#helptags()
@@ -12,7 +15,7 @@ set number
 set mouse=a
 set mousehide
 
-set spell
+" set spell
 set hlsearch
 set showmatch
 set incsearch
@@ -46,24 +49,60 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 " JPoz extras
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 map <C-n> :NERDTreeToggle<CR>
-set rtp+=/usr/local/go/misc/vim/
-filetype plugin indent on
-syntax on
-
+set colorcolumn=80
 set dir=~/tmp
 set backupdir=~/backups
 
 let NERDTreeIgnore=['\.DS_Store','\.pyc','\~$','\.swo$','\.swp$','\.git','\.hg','\.svn','\.bzr']
 
+" if has('gui_running')
+"     set background=light
+"     colorscheme solarized
+" else
+"     set background=dark
+"     colorscheme Tomorrow
+" endifo
+"
+" Jellybean
+" let g:jellybeans_use_lowcolor_black = 0
+" colorscheme jellybeans
+
+" base-16
 if has('gui_running')
     set background=light
-    colorscheme solarized
+    colorscheme base16-solarized
 else
-    set background=dark
-    colorscheme Tomorrow
+    set background=light
+    colorscheme base16-tomorrow
 endif
 
+" Symbol plug-in settings
+:set wildmode=list:longest,full
+let g:symbol_patterns = { 'javascript': ['^\s\{0,3}\zs\w\+\ze:'], 'ruby': ['^\s\+def\s\%[self\.]\zs[A-z]\+\ze'] }
+
+nnoremap <C-J> :call Complete('Symbol')<CR>
 
 " Stop the damn beeping
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
+
+" Awesome tabs and good scrollbards
+set guioptions+=lrb
+set guioptions-=lrb
+set guioptions-=e
+
+" SIMPLE
+let g:fugitive_github_domains = ['https://github.banksimple.com']
+
+
+" GOVIM
+function! s:GoLint()
+  cexpr system("golint " . shellescape(expand('%')))
+  copen
+endfunction
+command! GoLint :call s:GoLint()
+au FileType go au BufWritePre <buffer> Fmt
+let g:SuperTabDefaultCompletionType = "context"
+
+" DASH
+:nmap <silent> <leader>d <Plug>DashSearch
