@@ -94,6 +94,8 @@ set guioptions-=e
 " SIMPLE
 let g:fugitive_github_domains = ['https://github.banksimple.com']
 
+" | vertial splits
+hi VertSplit guibg=NONE 
 
 " GOVIM
 function! s:GoLint()
