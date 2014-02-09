@@ -6,10 +6,10 @@ syntax on
 " Pathogen
 call pathogen#infect()
 call pathogen#helptags()
- 
+
 set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
 filetype plugin indent on
- 
+
 syntax on
 set number
 set mouse=a
@@ -23,11 +23,11 @@ set ignorecase
 set autoindent
 set history=100
 set cursorline
-if has("unnamedplus")
-  set clipboard=unnamedplus
-elseif has("clipboard")
-  set clipboard=unnamed
-endif
+" if has("unnamedplus")
+"   set clipboard=unnamedplus
+" elseif has("clipboard")
+"   set clipboard=unnamed
+" endif
 
 set expandtab
 set shiftwidth=2
@@ -72,12 +72,13 @@ if has('gui_running')
     set background=light
     colorscheme base16-solarized
 else
-    set background=light
-    colorscheme base16-tomorrow
+  set background=light
+  colorscheme Tomorrow
 endif
 
 " Symbol plug-in settings
-:set wildmode=list:longest,full
+set wildmode=list:longest,full
+set wildmenu
 let g:symbol_patterns = { 'javascript': ['^\s\{0,3}\zs\w\+\ze:'], 'ruby': ['^\s\+def\s\%[self\.]\zs[A-z]\+\ze'] }
 
 nnoremap <C-J> :call Complete('Symbol')<CR>
@@ -95,7 +96,7 @@ set guioptions-=e
 let g:fugitive_github_domains = ['https://github.banksimple.com']
 
 " | vertial splits
-hi VertSplit guibg=NONE 
+hi VertSplit guibg=NONE
 
 " GOVIM
 function! s:GoLint()
@@ -103,8 +104,13 @@ function! s:GoLint()
   copen
 endfunction
 command! GoLint :call s:GoLint()
-au FileType go au BufWritePre <buffer> Fmt
-let g:SuperTabDefaultCompletionType = "context"
+" au FileType go au BufWritePre <buffer> Fmt
+" let g:SuperTabDefaultCompletionType = "context"
+let g:gocode_gofmt_tabwidth = ""
+let g:gocode_gofmt_tabs     = ""
 
 " DASH
 :nmap <silent> <leader>d <Plug>DashSearch
+
+" WHITESPACE
+" autocmd BufWritePost * FixWhitespace
